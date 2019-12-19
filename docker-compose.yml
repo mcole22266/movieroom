@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: app
+    build:
+      context: ./movieroom
+      dockerfile: dockerfile
+    env_file:
+      - ./movieroom.env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./gameroom/app:/gameroom/app
