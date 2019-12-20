@@ -1,0 +1,55 @@
+<!-- loginForm.html -->
+{% block content %}
+
+<div class="container form-card col-md-5">
+    <h1 class="form-label">Log In</h1>
+    <br>
+
+    <div class="justify-content-center">
+        <form action="/login" method="POST" role="form">
+            {{ form.csrf_token }}
+
+            {% include 'flash.html' %}
+
+            <!-- Username -->
+            <div class="form-field">
+                {{ form.uname.label }}:
+                {{ form.uname(class_="form-control") }}
+                    {% if form.uname.errors %}
+                        {% for error in form.uname.errors %}
+                            <div class="alert alert-warning">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+            </div>
+            <br>
+
+            <!-- Password -->
+            <div class="form-field">
+                {{ form.pword.label }}:
+                {{ form.pword(class_="form-control") }}
+                    {% if form.pword.errors %}
+                        {% for error in form.pword.errors %}
+                            <div class="alert alert-warning">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+            </div>
+            <br>
+
+            <!-- Submit -->
+            <div class="form-field">
+                {{ form.submit(class_="btn btn-primary rounded-pill", style="float: right;")}}
+            </div>
+            <span>Don't have an account?
+                <br>
+                <a href="/create">Create one!</a>
+            </span>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

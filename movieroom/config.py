@@ -10,3 +10,15 @@ class Config:
     FLASK_DEBUG = environ['FLASK_DEBUG']
     FLASK_HOST = environ['FLASK_HOST']
     FLASK_PORT = environ['FLASK_PORT']
+
+    # mysql config
+    MYSQL_DATABASE = environ['MYSQL_DATABASE']
+    MYSQL_ROOT_PASSWORD = environ['MYSQL_ROOT_PASSWORD']
+
+    DB_WAIT_INITIAL = environ['DB_WAIT_INITIAL']
+    DB_WAIT_MULTIPLIER = environ['DB_WAIT_MULTIPLIER']
+    DB_WAIT_MAX = environ['DB_WAIT_MAX']
+
+    # sqlalchemy config
+    SQLALCHEMY_DATABASE_URI = environ['SQLALCHEMY_DATABASE_URI']
+    SQLALCHEMY_TRACK_MODIFICATIONS = environ['SQLALCHEMY_TRACK_MODIFICATIONS']

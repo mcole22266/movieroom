@@ -13,3 +13,16 @@ services:
       - "5000:5000"
     volumes:
       - ./movieroom/app:/movieroom/app
+    links:
+      - db
+
+  db:
+    container_name: db
+    image: mysql:8.0.18
+    restart: always
+    env_file:
+      - ./movieroom.env
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
