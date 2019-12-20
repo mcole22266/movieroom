@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from .models import User
-from .forms import LoginForm
+from .forms import LoginForm, CreateAccountForm
 from .extensions import database_ready, login_manager
 
 
@@ -48,7 +48,8 @@ def create_app():
         @app.route('/home')
         @login_required
         def home():
-            return 'Home'
+            return render_template('home.html',
+                                   title="Movie Room")
 
         @app.route('/about')
         def about():
@@ -80,9 +81,34 @@ def create_app():
                                    title="Movie Room - Login",
                                    form=form)
 
-        @app.route('/create')
+        @app.route('/create', methods=['GET', 'POST'])
         def create():
-            return 'Create'
+            if current_user.is_authenticated:
+                return redirect(url_for('home'))
+            form = CreateAccountForm()
+
+            # POST
+            if form.validate_on_submit():
+                fname = request.form.get('fname')
+                if not fname:
+                    fname = None
+                lname = request.form.get('lname')
+                if not lname:
+                    lname = None
+                email = request.form.get('email')
+                uname = request.form.get('uname')
+                pword = request.form.get('pword')
+                app.logger.info(f'Creating account for {uname} <{email}>')
+                user = User(uname, pword, email, fname, lname)
+                db.session.add(user)
+                db.session.commit()
+                login_user(user)
+                return redirect(url_for('setup'))
+
+            # GET
+            return render_template('create.html',
+                                   title="Movie Room - Create Account",
+                                   form=form)
 
         @app.route('/logout')
         @login_required
@@ -92,6 +118,7 @@ def create_app():
 
         @app.route('/setup')
         def setup():
-            return 'Setup'
+            return render_template('setup.html',
+                                   title="Movie Room - Setup")
 
         return app

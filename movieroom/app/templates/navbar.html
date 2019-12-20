@@ -11,6 +11,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
             </li>
+            {% if current_user.is_active %}
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link">Log Out</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
     <!---------->
@@ -28,7 +33,11 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/contact"><button class="btn btn-primary rounded-pill">Contact Us</button></a>
+                <a class="nav-link" href="/contact">
+                    <button class="btn btn-primary rounded-pill">
+                        Contact Us
+                    </button>
+                </a>
             </li>
         </ul>
     </div>
