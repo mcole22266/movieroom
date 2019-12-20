@@ -1,0 +1,24 @@
+.bg-landing {
+    height: 100vh;
+    min-height: 500px;
+    background-image: url(./images/theater_seats.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+    background-color: grey;
+}
+
+.text-landing {
+    color: white;
+    font-family: 'Prompt', sans-serif;
+}
+
+.nav-text {
+    font-family: 'Prompt', sans-serif;
+}
+
+.brand-text {
+    font-family: 'Righteous', sans-serif;
+    font-size: 50px;
+}

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 
 def create_app():
@@ -11,6 +11,27 @@ def create_app():
 
         @app.route('/')
         def index():
-            return 'Hello World - this is the index page'
+            return render_template('index.html',
+                                   title="Movie Room")
+
+        @app.route('/about')
+        def about():
+            return 'About'
+
+        @app.route('/contact')
+        def contact():
+            return 'Contact'
+
+        @app.route('/login')
+        def login():
+            return 'Login'
+
+        @app.route('/create')
+        def create():
+            return 'Create'
+
+        @app.route('/setup')
+        def setup():
+            return 'Setup'
 
         return app
