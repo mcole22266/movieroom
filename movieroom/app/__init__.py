@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 
+from .models import User
 from .extensions import database_ready
 
 
@@ -11,11 +12,21 @@ def create_app():
 
     with app.app_context():
 
-        from .extensions import db
+        from .models import db
         db.init_app(app)
 
         if database_ready(db, app):
             db.create_all()
+            if not User.query.filter_by(uname='admin').first():
+                adminUser = User('admin', 'adminpass', 'fakeemail@gmail.com',
+                                 is_admin=True)
+                db.session.add(adminUser)
+                app.logger.info('Admin User added to db')
+
+            if not User.query.filter_by(uname='reg').first():
+                regUser = User('reg', 'regpass', 'fakeemail2@gmail.com')
+                db.session.add(regUser)
+                app.logger.info('Reg User added to db')
             db.session.commit()
 
         @app.route('/')
