@@ -2,6 +2,11 @@ from os import environ
 from time import sleep
 from hashlib import sha256
 
+from flask_login import LoginManager
+
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+
 
 def database_ready(db, app):
     wait = int(environ['DB_WAIT_INITIAL'])

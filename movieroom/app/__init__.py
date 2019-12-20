@@ -1,7 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
 
 from .models import User
-from .extensions import database_ready
+from .forms import LoginForm
+from .extensions import database_ready, login_manager
 
 
 def create_app():
@@ -14,6 +16,11 @@ def create_app():
 
         from .models import db
         db.init_app(app)
+
+        from flask_wtf.csrf import CSRFProtect
+        CSRFProtect(app)
+
+        login_manager.init_app(app)
 
         if database_ready(db, app):
             db.create_all()
@@ -29,10 +36,19 @@ def create_app():
                 app.logger.info('Reg User added to db')
             db.session.commit()
 
-        @app.route('/')
+        @app.route('/', methods=['GET', 'POST'])
         def index():
+            if current_user.is_authenticated:
+                return redirect(url_for('home'))
+            form = LoginForm()
             return render_template('index.html',
-                                   title="Movie Room")
+                                   title="Movie Room",
+                                   form=form)
+
+        @app.route('/home')
+        @login_required
+        def home():
+            return 'Home'
 
         @app.route('/about')
         def about():
@@ -42,13 +58,37 @@ def create_app():
         def contact():
             return 'Contact'
 
-        @app.route('/login')
+        @app.route('/login', methods=['GET', 'POST'])
         def login():
-            return 'Login'
+            if current_user.is_authenticated:
+                return redirect(url_for('home'))
+            form = LoginForm()
+
+            # POST
+            if form.validate_on_submit():
+                uname = request.form.get('uname')
+                pword = request.form.get('pword')
+                user = User.query.filter_by(uname=uname).first()
+                if user and user.pwordCheck(pword):
+                    login_user(user)
+                    return redirect(url_for('home'))
+                else:
+                    return redirect(url_for('login'))
+
+            # GET
+            return render_template('login.html',
+                                   title="Movie Room - Login",
+                                   form=form)
 
         @app.route('/create')
         def create():
             return 'Create'
+
+        @app.route('/logout')
+        @login_required
+        def logout():
+            logout_user()
+            return redirect(url_for('index'))
 
         @app.route('/setup')
         def setup():

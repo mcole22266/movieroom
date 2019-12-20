@@ -22,3 +22,13 @@
     font-family: 'Righteous', sans-serif;
     font-size: 50px;
 }
+
+.form-card {
+    background-color: white;
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.form-text {
+    font-family: 'Prompt', sans-serif;
+}
