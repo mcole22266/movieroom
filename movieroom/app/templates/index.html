@@ -1,0 +1,22 @@
+<!-- index.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- navbar -->
+{% include 'navbar.html' %}
+
+<!-- body -->
+<div class="row align-items-center">
+    <div class="col text-center">
+        <h1>Cord-Cutters Rejoice!</h1>
+        <p>Sign in to find out if that blockbuster movie that you want to watch tonight is already available at your fingertips</p>
+    </div>
+    <div class="col text-center">
+        <a href="/login"><button class="btn btn-primary btn-pill">Log In</button></a>
+        <a href="/create"><button class="btn btn-primary btn-pill">Create Account</button></a>
+    </div>
+</div>
+
+{% endblock %}
