@@ -9,6 +9,8 @@
         <form action="/login" method="POST" role="form">
             {{ form.csrf_token }}
 
+            {% include 'flash.html' %}
+
             <!-- Username -->
             <div class="form-field">
                 {{ form.uname.label }}:

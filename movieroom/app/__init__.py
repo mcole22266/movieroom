@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_login import current_user, login_required, login_user, logout_user
 
 from .models import User
@@ -74,6 +74,7 @@ def create_app():
                     login_user(user)
                     return redirect(url_for('home'))
                 else:
+                    flash('Username and/or Password incorrect.')
                     return redirect(url_for('login'))
 
             # GET
